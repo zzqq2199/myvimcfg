@@ -200,7 +200,7 @@ nmap ,wr :Ack <cword><CR>
 " use 256 colors when possible
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
 	let &t_Co = 256
-    "colorscheme fisa
+    colorscheme fisa
 else
     colorscheme delek
 endif
@@ -416,4 +416,75 @@ let g:airline#extensions#whitespace#enabled = 0
 
 nmap <c-v> "+gp
 nmap <c-c> "+y
+
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endfunction
+
+function! DeletePair()
+	let line=getline('.')
+	let lchar=line[col('.')-2]
+	let rchar=line[col('.')-1]
+	if lchar=='(' && rchar==')'
+		return "\<Right>\<BS>\<BS>"
+	elseif lchar=='[' && rchar==']'
+		return "\<Right>\<BS>\<BS>"
+	elseif lchar=='{' && rchar=='}'
+		return "\<Right>\<BS>\<BS>"
+	elseif lchar=='<' && rchar=='>'
+		return "\<Right>\<BS>\<BS>"
+	elseif lchar=='"' && rchar=='"'
+		return "\<Right>\<BS>\<BS>"
+	elseif lchar=="'" && rchar=="'"
+		return "\<Right>\<BS>\<BS>"
+	else
+		return "\<BS>"
+	endif
+endfunction
+inoremap <BS> <c-r>=DeletePair()<CR>
+
+
+
+function! CloseQuote(char)
+	let s:line=getline('.')
+	let s:char=s:line[col('.')-1]
+	if s:char == a:char
+		return "\<Right>"
+	elseif a:char=='"'
+		return "\"\"\<ESC>i"
+	else
+		return "''\<ESC>i"
+	endif 
+endfunction
+
+function! CloseBrace()
+	let s:line=getline('.')
+	let s:char=s:line[col('.')-2]
+	let b=col('.')
+	if b==1
+		return "{\<CR>}\<ESC>O\t"
+	endif
+	if s:char==' ' || s:char=="\t"
+		return "{\<CR>}\<ESC>O\t"
+	else
+		return "{\<CR>\<BS>}\<ESC>O"
+endfunction
+inoremap { {}<ESC>i
+inoremap {<CR> <c-r>=CloseBrace()<CR>
+
+
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap } <c-r>=ClosePair('}')<CR>
+inoremap > <c-r>=ClosePair('>')<CR>
+inoremap " <c-r>=CloseQuote('"')<CR>
+inoremap ' <c-r>=CloseQuote("'")<CR>
+
 
