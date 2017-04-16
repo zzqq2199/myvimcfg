@@ -200,7 +200,11 @@ nmap ,wr :Ack <cword><CR>
 " use 256 colors when possible
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
 	let &t_Co = 256
+<<<<<<< HEAD
     colorscheme fisa
+=======
+    "colorscheme fisa
+>>>>>>> 824c6a26a10a859b8c9c021821686a2382229e56
 else
     colorscheme delek
 endif

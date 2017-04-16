@@ -413,10 +413,7 @@ let g:airline#extensions#whitespace#enabled = 0
 "let g:airline_symbols.branch = '⭠'
 "let g:airline_symbols.readonly = '⭤'
 "let g:airline_symbols.linenr = '⭡'
-<<<<<<< HEAD
 
 nmap <c-v> "+gp
 nmap <c-c> "+y
 
-=======
->>>>>>> 824c6a26a10a859b8c9c021821686a2382229e56

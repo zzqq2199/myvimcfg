@@ -1,0 +1,13 @@
+#include <iostream>
+using namespace std;
+#include <stdio.h>
+
+
+int main()
+{
+    char s[100];
+    sprintf(s,"123");
+    cout<<s<<endl;
+    sprintf(s+strlen(s),"456");
+    cout<<s<<endl;
+}
